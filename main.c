@@ -11,17 +11,21 @@ int main(void)
 
 	int j;
 
-	printf("$ ");
-	fflush(stdout);
+	pid_t child_pid;
+
+	int status;
+
+	char *token;
+
+	char **argv = malloc(MAX_WORDS * sizeof(char *));
+
 	while (1)
 	{
-		char *token;
-
-		char **argv = malloc(MAX_WORDS * sizeof(char *));
-
-	       if (fgets(buf, sizeof(buf), stdin) == NULL)
-		       break;
-	       token = strtok(buf, " ");
+		printf("$ ");
+		fflush(stdout);
+		if (fgets(buf, sizeof(buf), stdin) == NULL)
+				break;
+		token = strtok(buf, " ");
 		j = 0;
 		while (token[j])
 		{
@@ -29,7 +33,7 @@ int main(void)
 			token[j] = '\0';
 			j++;
 		}
-
+		free
 		if (argv == NULL)
 		{
 			printf("memory allocation failed for argv\n");
@@ -43,20 +47,27 @@ int main(void)
 			token = strtok(NULL, " ");
 			i++;
 		}
-
-	if (execve(argv[0], argv, environ) == -1)
-		printf("%s: No such file or directory\n", argv[0]);
-	printf("$ ");
-	fflush(stdout);
-	free(buf);
-	free(token);
-	i = 0;
-	while (argv[i])
-	{
-		free(argv[i]);
-		i++;
+		child_pid = fork();
+		if (child_pid == 0)
+		{
+			if (execve(argv[0], argv, environ) == -1)
+			{
+				printf("%s: No such file or directory\n", argv[0]);
+			}
+		}
+		else
+		{
+			wait(&status);
+		}
+		free(buf);
+		free(token);
+		i = 0;
+		while (argv[i])
+		{
+			free(argv[i]);
+			i++;
+		}
+		free(argv);
 	}
-	free(argv);
-	}
-	return (0);
+	return (EXIT_SUCCESS);
 }
