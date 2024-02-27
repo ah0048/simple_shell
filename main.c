@@ -7,9 +7,13 @@ int main(void)
 {
 	int i;
 
-	char *buf = malloc(MAX_SIZE * sizeof(char));
+	char *buf = NULL;
 
-	int j;
+	size_t len;
+
+	ssize_t read;
+
+	size_t last_char;
 
 	pid_t child_pid;
 
@@ -18,22 +22,20 @@ int main(void)
 	char *token;
 
 	char **argv = malloc(MAX_WORDS * sizeof(char *));
-
+	printf("$ ");
+	fflush(stdout);
 	while (1)
 	{
-		printf("$ ");
-		fflush(stdout);
-		if (fgets(buf, sizeof(buf), stdin) == NULL)
-				break;
-		token = strtok(buf, " ");
-		j = 0;
-		while (token[j])
+		read = getline(&buf, &len, stdin);
+		if (read == -1)
 		{
-			if (token[j] == '\n')
-			token[j] = '\0';
-			j++;
+			printf("\n");
+			break;
 		}
-		free
+		last_char = strlen(buf) - 1;
+		if (buf[last_char] == '\n')
+			buf[last_char] = '\0';
+		token = strtok(buf, " ");
 		if (argv == NULL)
 		{
 			printf("memory allocation failed for argv\n");
@@ -52,22 +54,23 @@ int main(void)
 		{
 			if (execve(argv[0], argv, environ) == -1)
 			{
-				printf("%s: No such file or directory\n", argv[0]);
+				printf("hsh: No such file or directory\n");
 			}
+			exit(EXIT_SUCCESS);
 		}
 		else
 		{
 			wait(&status);
 		}
-		free(buf);
-		free(token);
-		i = 0;
-		while (argv[i])
-		{
-			free(argv[i]);
-			i++;
-		}
-		free(argv);
+		printf("$ ");
 	}
+	free(buf);
+	i = 0;
+	while (argv[i])
+	{
+		free(argv[i]);
+		i++;
+	}
+	free(argv);
 	return (EXIT_SUCCESS);
 }
