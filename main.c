@@ -7,7 +7,7 @@ int main(void)
 {
 	int i, status;
 
-	char *buf = NULL, *token;
+	char *buf = NULL, *token, *full_path;
 
 	size_t len, last_char;
 
@@ -16,6 +16,8 @@ int main(void)
 	pid_t child_pid;
 
 	char **argv = malloc(MAX_WORDS * sizeof(char *));
+
+	node *pathlist = makeList();
 
 	while (1)
 	{
@@ -41,10 +43,24 @@ int main(void)
 			i++;
 		}
 		argv[i] = NULL;
+		while (pathlist)
+		{
+			full_path = malloc(strlen(argv[0] + strlen(pathlist->dir) + 2));
+			sprintf(full_path, "%s/%s", pathlist->dir, argv[0]);
+			if (access(full_path, X_OK) == 0)
+				break;
+			free(full_path);
+			if (pathlist->next == NULL)
+			{
+				printf("%s: No such file or directory\n", argv[0]);
+				exit(EXIT_FAILURE);
+			}
+			pathlist = pathlist->next;
+		}
 		child_pid = fork();
 		if (child_pid == 0)
 		{
-			if (execve(argv[0], argv, environ) == -1)
+			if (execve(full_path, argv, environ) == -1)
 				printf("%s: No such file or directory\n", argv[0]);
 			exit(EXIT_SUCCESS);
 		}
@@ -59,5 +75,8 @@ int main(void)
 		i++;
 	}
 	free(argv);
+	freelist(pathlist);
+	free(pathlist);
+	free(full_path);
 	return (EXIT_SUCCESS);
 }

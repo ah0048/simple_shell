@@ -24,4 +24,5 @@ typedef struct node
 } node;
 void addDir(node **head, const char *dir);
 void freelist(node *head);
+node *makeList(void);
 #endif
