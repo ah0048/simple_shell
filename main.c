@@ -43,12 +43,18 @@ int main(void)
 			i++;
 		}
 		argv[i] = NULL;
+		if (access(argv[0], X_OK) != 0)
 		while (pathlist)
 		{
 			full_path = malloc(strlen(argv[0] + strlen(pathlist->dir) + 2));
 			sprintf(full_path, "%s/%s", pathlist->dir, argv[0]);
 			if (access(full_path, X_OK) == 0)
+			{
+				free(argv[0]);
+				argv[0] = strdup(full_path);
+				free(full_path);
 				break;
+			}
 			free(full_path);
 			if (pathlist->next == NULL)
 			{
@@ -60,7 +66,7 @@ int main(void)
 		child_pid = fork();
 		if (child_pid == 0)
 		{
-			if (execve(full_path, argv, environ) == -1)
+			if (execve(argv[0], argv, environ) == -1)
 				printf("%s: No such file or directory\n", argv[0]);
 			exit(EXIT_SUCCESS);
 		}
@@ -77,6 +83,5 @@ int main(void)
 	free(argv);
 	freelist(pathlist);
 	free(pathlist);
-	free(full_path);
 	return (EXIT_SUCCESS);
 }
