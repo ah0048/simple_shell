@@ -60,7 +60,6 @@ int main(void)
 			free(full_path);
 			if (pathlist->next == NULL)
 			{
-				printf("%s: No such file or directory\n", argv[0]);
 				break;
 			}
 			pathlist = pathlist->next;
