@@ -5,19 +5,27 @@
 */
 int main(void)
 {
-	int i, char *buf = NULL, size_t len, ssize_t read, size_t last_char;
+	int i, status;
 
-	pid_t child_pid, int status, char *token;
+	char *buf = NULL, *token;
+
+	size_t len, last_char;
+
+	ssize_t read;
+
+	pid_t child_pid;
 
 	char **argv = malloc(MAX_WORDS * sizeof(char *));
 
 	while (1)
 	{
-		printf("$ "); fflush(stdout);
+		printf("$ ");
+		fflush(stdout);
 		read = getline(&buf, &len, stdin);
 		if (read == -1)
 		{
-			printf("\n"); break;
+			printf("\n");
+			break;
 		}
 		last_char = strlen(buf) - 1;
 		if (buf[last_char] == '\n')
