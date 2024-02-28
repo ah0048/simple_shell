@@ -22,4 +22,6 @@ typedef struct node
 	char *dir;
 	struct node *next;
 } node;
+void addDir(node **head, const char *dir);
+void freelist(node *head);
 #endif

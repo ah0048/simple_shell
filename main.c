@@ -40,11 +40,12 @@ int main(void)
 			token = strtok(NULL, " ");
 			i++;
 		}
+		argv[i] = NULL;
 		child_pid = fork();
 		if (child_pid == 0)
 		{
 			if (execve(argv[0], argv, environ) == -1)
-				printf("hsh: No such file or directory\n");
+				printf("%s: No such file or directory\n", argv[0]);
 			exit(EXIT_SUCCESS);
 		}
 		else
@@ -53,8 +54,10 @@ int main(void)
 	free(buf);
 	i = 0;
 	while (argv[i])
-	{free(argv[i]);
-		i++;}
+	{
+		free(argv[i]);
+		i++;
+	}
 	free(argv);
-       	return (EXIT_SUCCESS);
+	return (EXIT_SUCCESS);
 }
