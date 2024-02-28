@@ -21,12 +21,14 @@ int main(void)
 
 	while (1)
 	{
+		if (isatty(STDIN_FILENO))
+		{
 		printf("$ ");
 		fflush(stdout);
+		}
 		read = getline(&buf, &len, stdin);
 		if (read == -1)
 		{
-			printf("\n");
 			break;
 		}
 		last_char = strlen(buf) - 1;
