@@ -43,6 +43,8 @@ int main(void)
 			i++;
 		}
 		argv[i] = NULL;
+		if (strcmp(argv[0], "exit") == 0)
+			break;
 		if (access(argv[0], X_OK) != 0)
 		while (pathlist)
 		{
@@ -59,7 +61,7 @@ int main(void)
 			if (pathlist->next == NULL)
 			{
 				printf("%s: No such file or directory\n", argv[0]);
-				exit(EXIT_FAILURE);
+				break;
 			}
 			pathlist = pathlist->next;
 		}
@@ -82,6 +84,6 @@ int main(void)
 	}
 	free(argv);
 	freelist(pathlist);
-	free(pathlist);
+	free(token);
 	return (EXIT_SUCCESS);
 }

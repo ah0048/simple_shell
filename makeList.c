@@ -16,5 +16,6 @@ node *makeList(void)
 		addDir(&pathlist, token);
 		token = strtok(NULL, ":");
 	}
+	free(path);
 	return (pathlist);
 }
