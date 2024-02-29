@@ -5,21 +5,21 @@
 */
 int main(void)
 {
-	int i, status;
+	int i = 0, status = 0;
 
-	char *buf = NULL, *inner_buf, *token, *full_path;
+	char *buf = NULL, *inner_buf = NULL, *token = NULL, *full_path = NULL;
 
-	size_t len, last_char;
+	size_t len = 0, last_char = 0;
 
-	ssize_t read;
+	ssize_t read = 0;
 
-	pid_t child_pid;
+	pid_t child_pid = 0;
 
 	char **argv = malloc(MAX_WORDS * sizeof(char *));
 
 	node *pathlist = makeList();
 
-	node *current;
+	node *current = pathlist;
 
 	while (1)
 	{
