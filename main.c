@@ -83,7 +83,7 @@ int main(void)
 		if (child_pid == 0)
 		{
 			if (execve(argv[0], argv, environ) == -1)
-				printf("%s: No such file or directory\n", argv[0]);
+				fprintf(stderr, "./hsh: 1:%s: not found\n", argv[0]);
 			exit(0);
 		}
 		else
