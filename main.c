@@ -88,6 +88,7 @@ int main(void)
 			wait(&status);
 	}
 	free(buf);
+	free(inner_buf);
 	i = 0;
 	while (argv[i])
 	{
