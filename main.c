@@ -5,7 +5,7 @@
 */
 int main(void)
 {
-	int i, status;
+	int i, status, k = 0;
 
 	char *buf = NULL, *token, *full_path;
 
@@ -18,6 +18,8 @@ int main(void)
 	char **argv = malloc(MAX_WORDS * sizeof(char *));
 
 	node *pathlist = makeList();
+
+	node *current;
 
 	while (1)
 	{
@@ -36,6 +38,7 @@ int main(void)
 			buf[last_char] = '\0';
 		token = strtok(buf, " ");
 		i = 0;
+		k++;
 		while (token != NULL)
 		{
 			argv[i] = strdup(token);
@@ -47,11 +50,14 @@ int main(void)
 		argv[i] = NULL;
 		if (strcmp(argv[0], "exit") == 0)
 			break;
+		if (argv[0] == NULL || strlen(argv[0]) == 0)
+			continue;
 		if (access(argv[0], X_OK) != 0)
-		while (pathlist)
+			current = pathlist;
+		while (current)
 		{
-			full_path = malloc(strlen(argv[0] + strlen(pathlist->dir) + 2));
-			sprintf(full_path, "%s/%s", pathlist->dir, argv[0]);
+			full_path = malloc(strlen(argv[0] + strlen(current->dir) + 2));
+			sprintf(full_path, "%s/%s", current->dir, argv[0]);
 			if (access(full_path, X_OK) == 0)
 			{
 				free(argv[0]);
@@ -60,17 +66,18 @@ int main(void)
 				break;
 			}
 			free(full_path);
-			if (pathlist->next == NULL)
+			if (current->next == NULL)
 			{
 				break;
 			}
-			pathlist = pathlist->next;
+			current = current->next;
 		}
+		current = NULL;
 		child_pid = fork();
 		if (child_pid == 0)
 		{
 			if (execve(argv[0], argv, environ) == -1)
-				printf("%s: No such file or directory\n", argv[0]);
+				printf("%s: no such file or directory\n", argv[0]);
 			exit(EXIT_SUCCESS);
 		}
 		else
