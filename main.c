@@ -21,8 +21,6 @@ int main(void)
 
 	node *current;
 
-	argv[0] = NULL;
-
 	while (1)
 	{
 		if (isatty(STDIN_FILENO))
