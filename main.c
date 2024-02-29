@@ -83,8 +83,11 @@ int main(void)
 		if (child_pid == 0)
 		{
 			if (execve(argv[0], argv, environ) == -1)
+			{
 				fprintf(stderr, "./hsh: 1:%s: not found\n", argv[0]);
-			exit(0);
+				exit(EXIT_FAILURE);
+			}
+			exit(EXIT_SUCCESS);
 		}
 		else
 			wait(&status);
@@ -100,5 +103,13 @@ int main(void)
 	}
 	free(argv);
 	freelist(pathlist);
-	return (0);
+	if (WIFEXITED(status))
+	{
+		return (WEXITSTATUS(status));
+	}
+	else if (WIFSIGNALED(status))
+	{
+		return (WTERMSIG(status));
+	}
+	return (status);
 }
