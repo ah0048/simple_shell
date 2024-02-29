@@ -7,7 +7,7 @@ int main(void)
 {
 	int i, status;
 
-	char *buf, *inner_buf, *token, *full_path;
+	char *buf = NULL, *inner_buf, *token, *full_path;
 
 	size_t len, last_char;
 
@@ -20,6 +20,8 @@ int main(void)
 	node *pathlist = makeList();
 
 	node *current;
+
+	argv[0] = NULL;
 
 	while (1)
 	{
