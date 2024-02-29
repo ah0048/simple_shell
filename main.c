@@ -5,9 +5,9 @@
 */
 int main(void)
 {
-	int i, status, k = 0;
+	int i, status;
 
-	char *buf = NULL, *token, *full_path;
+	char *buf, *inner_buf, *token, *full_path;
 
 	size_t len, last_char;
 
@@ -33,14 +33,14 @@ int main(void)
 		{
 			break;
 		}
-		if (buf[0] == ' ' || buf[0] == '\n')
-			continue;
 		last_char = strlen(buf) - 1;
 		if (buf[last_char] == '\n')
 			buf[last_char] = '\0';
-		token = strtok(buf, " ");
+		inner_buf = strtok(buf, "\n");
+		while (inner_buf)
+		{
+		token = strtok(inner_buf, " ");
 		i = 0;
-		k++;
 		while (token != NULL)
 		{
 			argv[i] = strdup(token);
@@ -49,11 +49,13 @@ int main(void)
 			token = strtok(NULL, " ");
 			i++;
 		}
+		inner_buf = strtok(NULL, "\n");
+		}
 		argv[i] = NULL;
-		if (strcmp(argv[0], "exit") == 0)
-			break;
 		if (argv[0] == NULL || strlen(argv[0]) == 0)
 			continue;
+		if (strcmp(argv[0], "exit") == 0)
+			break;
 		current = pathlist;
 		if (access(argv[0], X_OK) != 0)
 		while (current)
