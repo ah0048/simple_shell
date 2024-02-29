@@ -52,8 +52,10 @@ int main(void)
 		argv[i] = NULL;
 		if (strcmp(argv[0], "exit") == 0)
 			break;
+		if (argv[0] == NULL || strlen(argv[0]) == 0)
+			continue;
+		current = pathlist;
 		if (access(argv[0], X_OK) != 0)
-			current = pathlist;
 		while (current)
 		{
 			full_path = malloc(strlen(argv[0] + strlen(current->dir) + 2));
@@ -77,7 +79,7 @@ int main(void)
 		if (child_pid == 0)
 		{
 			if (execve(argv[0], argv, environ) == -1)
-				printf("%s: no such file or directory\n", argv[0]);
+				printf("%s: No such file or directory\n", argv[0]);
 			exit(EXIT_SUCCESS);
 		}
 		else
@@ -92,6 +94,5 @@ int main(void)
 	}
 	free(argv);
 	freelist(pathlist);
-	free(token);
 	return (EXIT_SUCCESS);
 }
