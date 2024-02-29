@@ -9,6 +9,8 @@ int main(void)
 
 	char *buf = NULL, *inner_buf = NULL, *token = NULL, *full_path = NULL;
 
+	char *_exit = NULL;
+
 	size_t len = 0, last_char = 0;
 
 	ssize_t read = 0;
@@ -55,7 +57,10 @@ int main(void)
 		if (argv[0] == NULL || strlen(argv[0]) == 0)
 			continue;
 		if (strcmp(argv[0], "exit") == 0)
+		{
+			_exit = argv[0];
 			break;
+		}
 		current = pathlist;
 		if (access(argv[0], X_OK) != 0)
 		while (current)
@@ -87,6 +92,7 @@ int main(void)
 		else
 			wait(&status);
 	}
+
 	free(buf);
 	free(inner_buf);
 	i = 0;
@@ -97,5 +103,7 @@ int main(void)
 	}
 	free(argv);
 	freelist(pathlist);
+	if (_exit)
+		exit(2);
 	return (0);
 }
