@@ -33,6 +33,8 @@ int main(void)
 		{
 			break;
 		}
+		if (buf[0] == ' ' || buf[0] == '\n')
+			continue;
 		last_char = strlen(buf) - 1;
 		if (buf[last_char] == '\n')
 			buf[last_char] = '\0';
@@ -50,8 +52,6 @@ int main(void)
 		argv[i] = NULL;
 		if (strcmp(argv[0], "exit") == 0)
 			break;
-		if (argv[0] == NULL || strlen(argv[0]) == 0)
-			continue;
 		if (access(argv[0], X_OK) != 0)
 			current = pathlist;
 		while (current)
