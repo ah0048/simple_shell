@@ -82,7 +82,7 @@ int main(void)
 		{
 			if (execve(argv[0], argv, environ) == -1)
 				printf("%s: No such file or directory\n", argv[0]);
-			exit(EXIT_SUCCESS);
+			exit(0);
 		}
 		else
 			wait(&status);
@@ -96,5 +96,5 @@ int main(void)
 	}
 	free(argv);
 	freelist(pathlist);
-	return (EXIT_SUCCESS);
+	return (0);
 }
