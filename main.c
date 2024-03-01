@@ -17,6 +17,8 @@ int main(void)
 
 	char **argv = malloc(MAX_WORDS * sizeof(char *));
 
+	extern char **environ;
+
 	node *pathlist = makeList();
 
 	node *current = pathlist;

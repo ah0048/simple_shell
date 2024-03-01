@@ -7,7 +7,6 @@
 #include <sys/stat.h>
 #include <sys/types.h>
 #include <sys/wait.h>
-extern char **environ;
 #define MAX_SIZE 1024
 #define MAX_WORDS 100
 /**

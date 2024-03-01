@@ -5,6 +5,7 @@
 */
 void _env(void)
 {
+	extern char **environ;
 	char **env;
 	int i = 0;
 	if (!environ)
