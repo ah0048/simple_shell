@@ -5,10 +5,14 @@
 */
 void _env(void)
 {
-	char **env = environ;
-	while (*env)
+	char **env;
+	int i = 0;
+	env = environ;
+	if (!environ)
+		return;
+	while (env[i])
 	{
-		printf("%s\n", *env);
-		env++;
+		printf("%s\n", env[i]);
+		i++;
 	}
 }
