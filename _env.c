@@ -13,7 +13,8 @@ void _env(void)
 	env = environ;
 	while (env[i])
 	{
-		printf("%s\n", env[i]);
+		write(STDOUT_FILENO, env[i], strlen(env[i]));
+		write(STDOUT_FILENO, "\n", 1);
 		i++;
 	}
 }
