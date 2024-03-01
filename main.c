@@ -54,6 +54,11 @@ int main(void)
 		argv[i] = NULL;
 		if (argv[0] == NULL || strlen(argv[0]) == 0)
 			continue;
+		if (strcmp(argv[0], "env") == 0)
+		{
+			_env();
+			continue;
+		}
 		if (strcmp(argv[0], "exit") == 0)
 		{
 			i = 0;
