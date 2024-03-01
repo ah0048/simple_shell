@@ -15,5 +15,4 @@ void _env(void)
 		printf("%s\n", env[i]);
 		i++;
 	}
-	free(env);
 }
