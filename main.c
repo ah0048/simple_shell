@@ -57,6 +57,12 @@ int main(void)
 		if (strcmp(argv[0], "env") == 0)
 		{
 			_env();
+			i = 0;
+			while (argv[i])
+			{
+				free(argv[i]);
+				i++;
+			}
 			continue;
 		}
 		if (strcmp(argv[0], "exit") == 0)
