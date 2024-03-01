@@ -64,6 +64,17 @@ int main(void)
 			}
 			break;
 		}
+		if (strcmp(argv[0], "env") == 0)
+		{
+			_env();
+			i = 0;
+			while (argv[i])
+			{
+				free(argv[i]);
+				i++;
+			}
+			continue;
+		}
 		current = pathlist;
 		if (access(argv[0], X_OK) != 0)
 		while (current)
@@ -85,17 +96,6 @@ int main(void)
 			current = current->next;
 		}
 		current = NULL;
-		if (strcmp(argv[0], "/usr/bin/env") == 0)
-		{
-			_env();
-			i = 0;
-			while (argv[i])
-			{
-				free(argv[i]);
-				i++;
-			}
-			continue;
-		}
 		child_pid = fork();
 		if (child_pid == 0)
 		{
