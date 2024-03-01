@@ -56,6 +56,12 @@ int main(void)
 			continue;
 		if (strcmp(argv[0], "exit") == 0)
 		{
+			i = 0;
+			while (argv[i])
+			{
+				free(argv[i]);
+				i++;
+			}
 			break;
 		}
 		current = pathlist;
@@ -91,16 +97,16 @@ int main(void)
 		}
 		else
 			wait(&status);
+		i = 0;
+		while (argv[i])
+		{
+			free(argv[i]);
+			i++;
+		}
 	}
 
 	free(buf);
 	free(inner_buf);
-	i = 0;
-	while (argv[i])
-	{
-		free(argv[i]);
-		i++;
-	}
 	free(argv);
 	freelist(pathlist);
 	if (WIFEXITED(status))
