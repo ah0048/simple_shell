@@ -81,7 +81,7 @@ int main(void)
 		if (access(argv[0], X_OK) != 0)
 		while (current)
 		{
-			full_path = malloc(strlen(argv[0] + strlen(current->dir) + 2));
+			full_path = malloc((strlen(argv[0]) + strlen(current->dir) + 2) * sizeof(char));
 			sprintf(full_path, "%s/%s", current->dir, argv[0]);
 			if (access(full_path, X_OK) == 0)
 			{
