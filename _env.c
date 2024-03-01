@@ -7,12 +7,13 @@ void _env(void)
 {
 	char **env;
 	int i = 0;
-	env = environ;
 	if (!environ)
 		return;
+	env = environ;
 	while (env[i])
 	{
 		printf("%s\n", env[i]);
 		i++;
 	}
+	free(env);
 }
