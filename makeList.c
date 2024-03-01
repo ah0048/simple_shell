@@ -7,10 +7,12 @@ node *makeList(void)
 {
 	node *pathlist = NULL;
 
-	char *path = strdup(getenv("PATH"));
+	char *path, *token;
 
-	char *token = strtok(path, ":");
-
+	if (getenv("PATH") == NULL)
+		return (NULL);
+	path = strdup(getenv("PATH"));
+	token = strtok(path, ":");
 	while (token != NULL)
 	{
 		addDir(&pathlist, token);
