@@ -19,10 +19,6 @@ int main(void)
 
 	extern char **environ;
 
-	char *endptr;
-
-	long exitCode;
-
 	node *pathlist = makeList();
 
 	node *current = pathlist;
@@ -62,20 +58,11 @@ int main(void)
 			continue;
 		if (strcmp(argv[0], "exit") == 0)
 		{
-			if (argv[1])
-			{
-				exitCode = strtol(argv[1], &endptr, 10);
-				if (*endptr != '\0')
-				{
-					status = 2;
-				}
-				status = exitCode;
 			i = 0;
 			while (argv[i])
 			{
 				free(argv[i]);
 				i++;
-			}
 			}
 			break;
 		}
