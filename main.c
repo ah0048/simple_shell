@@ -81,13 +81,14 @@ int main(void)
 		if (access(argv[0], X_OK) != 0)
 		while (current)
 		{
-			full_path = malloc(MAX_SIZE * sizeof(char));
+			full_path = malloc((strlen(argv[0]) + strlen(current->dir) + 2) * sizeof(char));
 			sprintf(full_path, "%s/%s", current->dir, argv[0]);
 			if (access(full_path, X_OK) == 0)
 			{
 				if (argv[0])
 				free(argv[0]);
 				argv[0] = strdup(full_path);
+				free(full_path);
 				break;
 			}
 			free(full_path);
