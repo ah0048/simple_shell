@@ -19,6 +19,10 @@ int main(void)
 
 	extern char **environ;
 
+	char *endptr;
+
+	long exitCode;
+
 	node *pathlist = makeList();
 
 	node *current = pathlist;
@@ -58,11 +62,20 @@ int main(void)
 			continue;
 		if (strcmp(argv[0], "exit") == 0)
 		{
+			if (argv[1])
+			{
+				exitCode = strtol(argv[1], &endptr, 10);
+				if (*endptr != '\0')
+				{
+					status = 2;
+				}
+				status = exitCode;
 			i = 0;
 			while (argv[i])
 			{
 				free(argv[i]);
 				i++;
+			}
 			}
 			break;
 		}
@@ -85,6 +98,7 @@ int main(void)
 			sprintf(full_path, "%s/%s", current->dir, argv[0]);
 			if (access(full_path, X_OK) == 0)
 			{
+				if (argv[0])
 				free(argv[0]);
 				argv[0] = strdup(full_path);
 				free(full_path);
@@ -103,7 +117,7 @@ int main(void)
 		{
 			if (execve(argv[0], argv, environ) == -1)
 			{
-				fprintf(stderr, "./hsh: 1:%s: not found\n", argv[0]);
+				fprintf(stderr, "./hsh: 1: %s: not found\n", argv[0]);
 				exit(EXIT_FAILURE);
 			}
 			exit(EXIT_SUCCESS);
