@@ -68,6 +68,18 @@ int main(void)
 			}
 			break;
 		}
+		if (strcmp(argv[0], "setenv") == 0)
+		{
+			if (argv[1] && argv[2])
+				_setenv(argv[1], argv[2], 1);
+			i = 0;
+			while (argv[i])
+			{
+				free(argv[i]);
+				i++;
+			}
+			continue;
+		}
 		if (strcmp(argv[0], "env") == 0)
 		{
 			_env();
