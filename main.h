@@ -21,6 +21,7 @@ typedef struct node
 	char *dir;
 	struct node *next;
 } node;
+extern char **environ;
 void addDir(node **head, const char *dir);
 void freelist(node *head);
 node *makeList(void);
