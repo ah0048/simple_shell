@@ -80,6 +80,18 @@ int main(void)
 			}
 			continue;
 		}
+		if (strcmp(argv[0], "unsetenv") == 0)
+		{
+			if (argv[1])
+				_unsetenv(argv[1]);
+			i = 0;
+			while (argv[i])
+			{
+				free(argv[i]);
+				i++;
+			}
+			continue;
+		}
 		if (strcmp(argv[0], "env") == 0)
 		{
 			_env();

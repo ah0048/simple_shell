@@ -28,4 +28,5 @@ node *makeList(void);
 void _env(void);
 int isExit(char *value_str);
 void _setenv(char *name, char *value, int overwrite);
+void _unsetenv(char *name);
 #endif
