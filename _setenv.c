@@ -24,7 +24,6 @@ void _setenv(char *name, char *value, int overwrite)
 				strcat(new_var, "=");
 				strcat(new_var, value);
 				environ[i] = new_var;
-				free(new_var);
 				return;
 			}
 			return;
@@ -37,5 +36,4 @@ void _setenv(char *name, char *value, int overwrite)
 	strcat(new_var, value);
 	environ[i] = new_var;
 	environ[i + 1] = NULL;
-	free(new_var);
 }
