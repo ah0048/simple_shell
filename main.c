@@ -5,7 +5,7 @@
 */
 int main(void)
 {
-	int i = 0, status = 0;
+	int i = 0, status = 0, state = 0;
 
 	char *buf = NULL, *inner_buf = NULL, *token = NULL, *full_path = NULL;
 
@@ -58,6 +58,10 @@ int main(void)
 			continue;
 		if (strcmp(argv[0], "exit") == 0)
 		{
+			if (argv[1])
+			{
+				state = isExit(argv[1]);
+			}
 			i = 0;
 			while (argv[i])
 			{
@@ -123,6 +127,10 @@ int main(void)
 	free(inner_buf);
 	free(argv);
 	freelist(pathlist);
+	if (state)
+	{
+		return (state);
+	}
 	if (WIFEXITED(status))
 	{
 		return (WEXITSTATUS(status));

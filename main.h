@@ -25,4 +25,5 @@ void addDir(node **head, const char *dir);
 void freelist(node *head);
 node *makeList(void);
 void _env(void);
+int isExit(char *value_str);
 #endif
