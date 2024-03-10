@@ -17,6 +17,7 @@ int isExit(char *value_str)
 	{
 		if (tmp >= 0)
 			return (tmp);
+		fprintf(stderr, "./hsh: 1: exit: Illegal number: %s\n", value_str);
 		return (2);
 	}
 	return (2);
