@@ -23,8 +23,8 @@ void _setenv(char *name, char *value, int overwrite)
 				strcpy(new_var, name);
 				strcat(new_var, "=");
 				strcat(new_var, value);
+				free(environ[1]);
 				environ[i] = new_var;
-				free(new_var);
 				return;
 			}
 			return;
@@ -35,6 +35,7 @@ void _setenv(char *name, char *value, int overwrite)
 	strcpy(new_var, name);
 	strcat(new_var, "=");
 	strcat(new_var, value);
+	environ = realloc(environ, (i + 2) * sizeof(char *));
 	environ[i] = new_var;
 	environ[i + 1] = NULL;
 	free(new_var);
